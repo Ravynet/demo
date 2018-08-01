@@ -13,5 +13,6 @@
             <p>{{ post.description|truncate(50, true) }}</p>
             <p>Le: {{ post.date|date }}</p>
         </article>
+        <hr>
     {% endfor %}
 {% endblock %}
