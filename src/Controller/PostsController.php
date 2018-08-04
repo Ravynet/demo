@@ -14,6 +14,14 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PostsController extends Controller
 {
+
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
     /**
      * @Route("/posts", name="posts_path")
      */
@@ -45,10 +53,8 @@ class PostsController extends Controller
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $em = $this->getDoctrine()->getManager();
-
-            $em->persist($post);
-            $em->flush();
+            $this->em->persist($post);
+            $this->em->flush();
 
             return $this->redirectToRoute('post_path', ['id' => $post->getId()]);
         }
@@ -60,7 +66,7 @@ class PostsController extends Controller
      * @Route("/posts/{id}/edit", name="post_edit_path", requirements={"id": "[0-9]+"})
      * @Method({"GET", "PATCH"})
      */
-    public function edit(Post $post, Request $request, EntityManagerInterface $em)
+    public function edit(Post $post, Request $request)
     {
         $form = $this->createForm(PostType::class, $post);
 
@@ -68,7 +74,7 @@ class PostsController extends Controller
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $em->flush();
+            $this->em->flush();
 
             return $this->redirectToRoute('post_path', ['id' => $post->getId()]);
         }
