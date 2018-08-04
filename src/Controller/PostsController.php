@@ -6,7 +6,6 @@ use App\Entity\Post;
 use App\Form\PostType;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -23,7 +22,7 @@ class PostsController extends Controller
     }
 
     /**
-     * @Route("/posts", name="posts_path")
+     * @Route("/posts", name="posts_path", methods={"GET"})
      */
     public function index(PostRepository $repository): Response
     {
@@ -33,7 +32,7 @@ class PostsController extends Controller
     }
 
     /**
-     * @Route("/posts/{id}", name="post_path", requirements={"id": "[0-9]+"})
+     * @Route("/posts/{id}", name="post_path", requirements={"id": "[0-9]+"}, methods={"GET"})
      */
     public function show(Post $post): Response
     {
@@ -41,7 +40,7 @@ class PostsController extends Controller
     }
 
     /**
-     * @Route("/posts/create", name="post_create_path")
+     * @Route("/posts/create", name="post_create_path", methods={"POST"})
      */
     public function create(Request $request): Response
     {
@@ -63,10 +62,9 @@ class PostsController extends Controller
     }
 
     /**
-     * @Route("/posts/{id}/edit", name="post_edit_path", requirements={"id": "[0-9]+"})
-     * @Method({"GET", "PATCH"})
+     * @Route("/posts/{id}/edit", name="post_edit_path", requirements={"id": "[0-9]+"}, methods={"GET", "PATCH"})
      */
-    public function edit(Post $post, Request $request)
+    public function edit(Post $post, Request $request): Response
     {
         $form = $this->createForm(PostType::class, $post);
 
@@ -83,5 +81,18 @@ class PostsController extends Controller
             'post' => $post,
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/posts/{id}", name="post_delete_path", requirements={"id": "[0-9]+"}, methods={"DELETE"})
+     */
+    public function delete(Post $post, Request $request): Response
+    {
+        if ($this->isCsrfTokenValid('delete', $request->request->get('token'))) {
+            $this->em->remove($post);
+            $this->em->flush();
+        }
+
+        return $this->redirectToRoute('posts_path');
     }
 }
