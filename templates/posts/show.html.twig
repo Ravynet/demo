@@ -3,4 +3,7 @@
 <h3>{{ post.description }}</h3>
 <p>Le: {{ post.date|date }}</p>
 
-<p><a href="/posts">All Posts</a></p>
+<p>
+    <a href="{{ path('posts_path') }}">All Posts</a> |
+    <a href="{{ path('post_edit_path', {'id': post.id}) }}">Edit</a>
+</p>
