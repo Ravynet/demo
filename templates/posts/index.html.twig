@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello !{% endblock %}
+
+{% block body %}
+    <h1>{{ posts|length }} Posts</h1>
+
+    <p><a href="{{ path('post_create_path') }}">Create Post</a> </p>
+
+    {% for post in posts %}
+        <article>
+            <header>
+                <h2><a href="{{ path('post_path', {"id": post.id}) }}">{{ post.title }}</a></h2>
+            </header>
+            <p>{{ post.description|truncate(50, true) }}</p>
+            <p>Le: {{ post.date|date }}</p>
+        </article>
+        <hr>
+    {% endfor %}
+{% endblock %}
