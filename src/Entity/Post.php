@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
  * @ORM\Table(name="posts")
  */
-class Post
+class Post extends Hydrate
 {
     /**
      * @ORM\Id()
@@ -31,27 +31,6 @@ class Post
      * @ORM\Column(type="datetime")
      */
     private $date;
-
-    public function __construct($data = [])
-    {
-        if (!empty($data))
-        {
-            $this->hydrate($data);
-        }
-    }
-
-    public function hydrate($data)
-    {
-        foreach ($data as $key => $value)
-        {
-            $method = 'set'.ucfirst($key);
-
-            if (method_exists($this, $method))
-            {
-                $this->$method($value);
-            }
-        }
-    }
 
     public function getId()
     {
