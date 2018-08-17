@@ -4,9 +4,15 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(
+ *     fields={"username"},
+ *     message="The specified username is already in use"
+ * )
  */
 class User implements UserInterface, \Serializable
 {
@@ -24,6 +30,7 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\Length(min=8, minMessage="Your password must be 8 characters minimum")
      */
     private $password;
 
@@ -31,6 +38,27 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="string", unique=true)
      */
     private $username;
+
+    /**
+     * @Assert\EqualTo(propertyPath="password", message="You didn't enter the same password")
+     */
+    private $confirm_password;
+
+    /**
+     * @return mixed
+     */
+    public function getConfirmPassword()
+    {
+        return $this->confirm_password;
+    }
+
+    /**
+     * @param mixed $confirm_password
+     */
+    public function setConfirmPassword($confirm_password)
+    {
+        $this->confirm_password = $confirm_password;
+    }
 
 
     /**
@@ -68,7 +96,7 @@ class User implements UserInterface, \Serializable
      */
     public function setRoles($roles)
     {
-        $this->roles = $roles;
+        $this->roles = [$roles];
     }
 
     /**

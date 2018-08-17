@@ -3,9 +3,51 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css">
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="{{ path('posts_path') }}">Blog</a>
+
+                <div class="collapse navbar-collapse" id="navbarColor01">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('posts_path') }}">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        {% if not app.user %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('login') }}">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('register_path') }}">Registration <span class="sr-only">(current)</span></a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('logout') }}">Logout</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                    {% if app.user %}
+                        <span class="navbar-text">
+                            Welcome {{ app.user.username }}
+                        </span>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <p>
+                    <div class="flash-{{ label }} alert alert-success" role="alert">
+                        {{ message }}
+                    </div>
+                </p>
+            {% endfor %}
+        {% endfor %}
+
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>

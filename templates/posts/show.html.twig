@@ -1,12 +1,24 @@
-<h1>{{ post.title }}</h1>
+{% extends 'base.html.twig' %}
 
-<h3>{{ post.description }}</h3>
-<p>Le: {{ post.date|date }}</p>
+{% block body %}
+    <div class="container">
+        <h1>{{ post.title }}</h1>
 
-<a href="{{ path('posts_path') }}">All Posts</a> |
-<a href="{{ path('post_edit_path', {'id': post.id}) }}">Edit</a>
-<form method="POST" action="{{ path('post_delete_path', {'id': post.id}) }}">
-    <input type="hidden" name="_method" value="DELETE">
-    <input type="hidden" name="token" value="{{ csrf_token('delete') }}">
-    <input type="submit" value="Delete" class="link" onclick="return confirm('Are you sure ?');">
-</form>
+        <h3>{{ post.description }}</h3>
+        <p>Le: {{ post.date|date }}</p>
+
+        <a href="{{ path('posts_path') }}">All Posts</a>
+
+        {% if app.user %}
+            {% if app.user.roles[0] == 'ROLE_ADMIN' %}
+                |
+                <a href="{{ path('post_edit_path', {'id': post.id}) }}">Edit</a>
+                <form method="POST" action="{{ path('post_delete_path', {'id': post.id}) }}">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="token" value="{{ csrf_token('delete') }}">
+                    <input type="submit" value="Delete" class="btn btn-success link" onclick="return confirm('Are you sure ?');">
+                </form>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endblock %}
