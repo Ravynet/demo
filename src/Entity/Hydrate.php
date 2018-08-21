@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 
-class Hydrate
+abstract class Hydrate
 {
     public function __construct($data = [])
     {
