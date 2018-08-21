@@ -6,6 +6,8 @@ use App\Entity\Post;
 use App\Form\PostType;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -41,6 +43,7 @@ class PostsController extends Controller
 
     /**
      * @Route("/posts/create", name="post_create_path", methods={"POST", "GET"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function create(Request $request): Response
     {
