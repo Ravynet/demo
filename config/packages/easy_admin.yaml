@@ -1,0 +1,30 @@
+easy_admin:
+    entities:
+        Post:
+            class: App\Entity\Post
+            help: 'Just a message for my test'
+            label: 'Posts'
+            list:
+                title: 'List of posts'
+                fields:
+                    - id
+                    - title
+            edit:
+                title: "Edit post n° %%entity_id%%"
+        User:
+            class: App\Entity\User
+            label: 'Users'
+            list:
+                title: 'List of users'
+            edit:
+                title: "Edit user %%entity_name%%"
+
+#        # List the entity class name you want to manage
+#        - App\Entity\Post
+#        - App\Entity\User
+    site_name: 'Post'
+    design:
+        brand_color: '#2F3E50'
+        assets:
+            css: ['/build/css/app.css']
+            favicon: '/build/images/backend/favicon.png'
