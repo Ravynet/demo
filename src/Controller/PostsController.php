@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use App\Services\ShiftPostDateService;
 
 class PostsController extends Controller
 {
@@ -69,6 +70,8 @@ class PostsController extends Controller
      */
     public function edit(Post $post, Request $request): Response
     {
+        $shiftPostDateService = $this->get(ShiftPostDateService::class);
+
         $form = $this->createForm(PostType::class, $post);
 
         $form->handleRequest($request);
@@ -76,6 +79,8 @@ class PostsController extends Controller
         if ($form->isSubmitted() && $form->isValid())
         {
             $this->em->flush();
+
+            $shiftPostDateService->shiftPostDate($post, 5);
 
             return $this->redirectToRoute('post_path', ['id' => $post->getId()]);
         }
