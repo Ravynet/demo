@@ -1,4 +1,6 @@
 var Encore = require('@symfony/webpack-encore');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ImageminPlugin = require('imagemin-webpack-plugin').default;
 
 Encore
     // the project directory where compiled assets will be stored
@@ -16,7 +18,7 @@ Encore
 
     // uncomment to define the assets of the project
     .addEntry('js/app', './assets/js/app.js')
-    .addStyleEntry('css/app', './assets/css/app.scss')
+    .addStyleEntry('css/app', './assets/scss/app.scss')
 
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()
@@ -26,6 +28,14 @@ Encore
 
     // uncomment for legacy applications that require $/jQuery as a global variable
     .autoProvidejQuery()
+
+    .addPlugin(new CopyWebpackPlugin([
+        { from: './assets/img', to: 'img' }
+    ]))
+
+    .addPlugin(new ImageminPlugin({
+        test: /\.(jpe?g|png|gif|svg)$/i
+    }))
 ;
 
 module.exports = Encore.getWebpackConfig();

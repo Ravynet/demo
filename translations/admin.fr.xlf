@@ -4,7 +4,7 @@
         <body>
             <trans-unit id="symfony_is_great">
                 <source>hello.world</source>
-                <target>{0}salut personne | {1}salut toi admin | ]1,Inf[salut à vous</target>
+                <target>{0}salut personne | {1}salut toi %name% :) | ]1,Inf[salut à vous</target>
             </trans-unit>
         </body>
     </file>
