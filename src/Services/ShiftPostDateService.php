@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Entity\Post;
-use DateInterval;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ShiftPostDateService
@@ -19,10 +18,8 @@ class ShiftPostDateService
 
     public function shiftPostDate(Post $post, int $days)
     {
-        $date = $post->getDate();
-
-        $date->add(new DateInterval('P' . $this->shiftDays . 'D'));
-
+        $date = clone $post->getDate();
+        $date->modify('+'.$days.' days');
         $post->setDate($date);
 
 //        $this->em->flush();

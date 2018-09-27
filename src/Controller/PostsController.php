@@ -78,11 +78,7 @@ class PostsController extends Controller
 
         if ($form->isSubmitted() && $form->isValid())
         {
-//            $this->em->flush();
-
             $shiftPostDateService->shiftPostDate($post, 5);
-
-            $this->em->flush();
 
             return $this->redirectToRoute('post_path', ['id' => $post->getId()]);
         }
