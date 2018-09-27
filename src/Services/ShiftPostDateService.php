@@ -22,6 +22,6 @@ class ShiftPostDateService
         $date->modify('+'.$days.' days');
         $post->setDate($date);
 
-//        $this->em->flush();
+        $this->em->flush();
     }
 }
