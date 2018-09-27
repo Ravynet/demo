@@ -68,9 +68,9 @@ class PostsController extends Controller
     /**
      * @Route("/posts/{id}/edit", name="post_edit_path", requirements={"id": "[0-9]+"}, methods={"POST", "GET", "PATCH"})
      */
-    public function edit(Post $post, Request $request, ShiftPostDateService $shiftPostDateService): Response
+    public function edit(Post $post, Request $request): Response
     {
-//        $shiftPostDateService = $this->get(ShiftPostDateService::class);
+        $shiftPostDateService = $this->get(ShiftPostDateService::class);
 
         $form = $this->createForm(PostType::class, $post);
 
@@ -78,13 +78,12 @@ class PostsController extends Controller
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $this->em->flush();
+//            $this->em->flush();
 
-//            $shiftPostDateService->shiftPostDate($post, 5);
             $shiftPostDateService->shiftPostDate($post, 5);
 
-dump($post->getDate());
-die();
+            $this->em->flush();
+
             return $this->redirectToRoute('post_path', ['id' => $post->getId()]);
         }
 

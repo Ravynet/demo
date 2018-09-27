@@ -5,7 +5,7 @@
         <h1>{{ post.title }}</h1>
 
         <h3>{{ post.description }}</h3>
-        <p>Le: {{ post.date|date }}</p>
+        <p>Le: {{ post.date|date("d/m/Y") }}</p>
 
         <a href="{{ path('posts_path') }}">All Posts</a>
 

@@ -18,7 +18,8 @@
                     <h2><a href="{{ path('post_path', {"id": post.id}) }}">{{ ToUpper(post.title) }}</a></h2>
                 </header>
                 <p>{{ post.description|truncate(50, true) }}</p>
-                <p>Le: {{ post.date|date }}</p>
+                <p>Le: {{ post.date|date("d/m/Y") }}</p>
+                <p>By: {{ dump(post) }}</p>
             </article>
             <hr>
         {% endfor %}

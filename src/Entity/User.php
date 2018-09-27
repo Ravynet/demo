@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -43,6 +45,16 @@ class User implements UserInterface, \Serializable
      * @Assert\EqualTo(propertyPath="password", message="You didn't enter the same password")
      */
     private $confirm_password;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="user")
+     */
+    private $posts;
+
+    public function __construct()
+    {
+        $this->posts = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -92,11 +104,14 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param mixed $roles
+     * @param array $roles
+     * @return User
      */
-    public function setRoles($roles)
+    public function setRoles(array $roles): self
     {
-        $this->roles = [$roles];
+        $this->roles = $roles;
+
+        return $this;
     }
 
     /**
@@ -143,5 +158,20 @@ class User implements UserInterface, \Serializable
             $this->username,
             $this->password
             ) = unserialize($serialized, array('allowed_classes' => false));
+    }
+
+    /**
+     * @return Collection|Post[]
+     */
+    public function getPosts(): Collection
+    {
+        return $this->posts;
+    }
+
+    public function setPosts(Collection $posts): self
+    {
+        $this->posts = $posts;
+
+        return $this;
     }
 }
