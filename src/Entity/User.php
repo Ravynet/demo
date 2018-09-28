@@ -166,6 +166,10 @@ class User implements UserInterface, \Serializable
         return $this->posts;
     }
 
+    /**
+     * @param Collection $posts
+     * @return User
+     */
     public function setPosts(Collection $posts): self
     {
         $this->posts = $posts;

@@ -34,6 +34,7 @@ class Post extends Hydrate
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
@@ -78,12 +79,19 @@ class Post extends Hydrate
         return $this;
     }
 
-    public function getUser(): User
+    /**
+     * @return User
+     */
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(User $user): self
+    /**
+     * @param User $user
+     * @return Post
+     */
+    public function setUser(?User $user): self
     {
         $this->user = $user;
 
