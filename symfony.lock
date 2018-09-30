@@ -152,6 +152,9 @@
             "ref": "fb7e19da7f013d0d422fa9bce16f5c510e27609b"
         }
     },
+    "statickidz/php-google-translate-free": {
+        "version": "1.0.0"
+    },
     "swiftmailer/swiftmailer": {
         "version": "v6.1.2"
     },

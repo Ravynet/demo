@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Post;
 use App\Form\PostType;
 use App\Repository\PostRepository;
+use App\Services\TranslateService;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -39,6 +40,10 @@ class PostsController extends Controller
      */
     public function show(Post $post): Response
     {
+        $translateService = $this->get(TranslateService::class);
+
+        $translateService->translate('en', 'fr', $post);
+
         return $this->render('posts/show.html.twig', compact('post'));
     }
 
