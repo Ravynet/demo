@@ -8,7 +8,7 @@ use \Statickidz\GoogleTranslate;
 class TranslateService
 {
 
-    public function translate(string $source, string $target, Post $post): Post
+    public function translate(string $source = null, string $target = null, Post $post): Post
     {
         $translate = new GoogleTranslate();
         $post->setDescription($translate->translate($source, $target, $post->getDescription()));

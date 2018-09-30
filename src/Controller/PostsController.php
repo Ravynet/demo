@@ -42,7 +42,7 @@ class PostsController extends Controller
     {
         $translateService = $this->get(TranslateService::class);
 
-        $translateService->translate('en', 'fr', $post);
+        $translateService->translate(null, 'fr', $post);
 
         return $this->render('posts/show.html.twig', compact('post'));
     }
