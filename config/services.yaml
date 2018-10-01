@@ -34,5 +34,8 @@ services:
         public: true
         arguments: ['%shift_days%']
 
-    App\Services\TranslateService:
-        public: true
+#    App\Services\TranslateService:
+#        public: true
+
+    Statickidz\GoogleTranslate:
+        public: false

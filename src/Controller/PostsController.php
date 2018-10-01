@@ -9,13 +9,14 @@ use App\Services\TranslateService;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use App\Services\ShiftPostDateService;
 
-class PostsController extends Controller
+class PostsController extends AbstractController
 {
 
     private $em;
@@ -38,11 +39,11 @@ class PostsController extends Controller
     /**
      * @Route("/posts/{id}", name="post_path", requirements={"id": "[0-9]+"}, methods={"GET"})
      */
-    public function show(Post $post): Response
+    public function show(Post $post, TranslateService $translateService): Response
     {
-        $translateService = $this->get(TranslateService::class);
+        //$translateService = $this->get(TranslateService::class);
 
-        $translateService->translate(null, 'fr', $post);
+        $translateService->translate( 'fr', $post);
 
         return $this->render('posts/show.html.twig', compact('post'));
     }

@@ -1,3 +1,8 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+postApi:
+    resource: App\Controller\Api\PostController
+    type: rest
+    prefix: /api
