@@ -10,18 +10,23 @@ class TranslateService
 
     private $translator;
 
+    /**
+     * TranslateService constructor.
+     * @param GoogleTranslate $translator
+     */
     public function __construct(GoogleTranslate $translator)
     {
         $this->translator = $translator;
     }
 
+
     /**
-     * @param string|null $source
-     * @param string|null $target
+     * @param string $target
      * @param Post $post
-     * @return Post
+     * @param null|string $source
+     * @return Post|null
      */
-    public function translate(?string $target, Post $post, ?string $source = null): ?Post
+    public function translate(string $target, Post $post, ?string $source = null): ?Post
     {
         $post->setDescription($this->translator->translate($source, $target, $post->getDescription()));
 
