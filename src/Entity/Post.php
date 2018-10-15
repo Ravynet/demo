@@ -3,10 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
  * @ORM\Table(name="posts")
+ * @Serializer\ExclusionPolicy("all")
  */
 class Post extends Hydrate
 {
@@ -19,22 +21,27 @@ class Post extends Hydrate
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Serializer\Expose
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Serializer\Expose
      */
     private $description;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Serializer\Expose
      */
     private $date;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts")
      * @ORM\JoinColumn(nullable=false)
+     * @Serializer\Expose
+     * @Serializer\Groups({"view_users"})
      */
     private $user;
 

@@ -18,7 +18,7 @@ class PostType extends AbstractType
         $builder
             ->add('title', TextType::class, ['label' => 'Post Title'])
             ->add('description', TextAreaType::class)
-            ->add('date', DateType::class)
+            ->add('date', DateType::class, ['format' => 'yyyy-MM-dd HH:mm:ss', 'widget' => 'single_text'])
             ->add('submit', SubmitType::class)
         ;
     }
@@ -27,6 +27,7 @@ class PostType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Post::class,
+            'csrf_protection' => false,
         ]);
     }
 }

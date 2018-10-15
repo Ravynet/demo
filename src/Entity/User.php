@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -15,6 +16,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *     fields={"username"},
  *     message="The specified username is already in use"
  * )
+ * @Serializer\ExclusionPolicy("all")
  */
 class User implements UserInterface, \Serializable
 {
@@ -38,6 +40,7 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", unique=true)
+     * @Serializer\Expose
      */
     private $username;
 
@@ -48,6 +51,8 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="user")
+     * @Serializer\Expose
+     * @Serializer\Groups({"view_users"})
      */
     private $posts;
 
