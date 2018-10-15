@@ -22,18 +22,21 @@ class Post extends Hydrate
     /**
      * @ORM\Column(type="string", length=255)
      * @Serializer\Expose
+     * @Serializer\Groups({"create_posts"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
      * @Serializer\Expose
+     * @Serializer\Groups({"create_posts"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="datetime")
      * @Serializer\Expose
+     * @Serializer\Groups({"create_posts"})
      */
     private $date;
 
@@ -41,7 +44,7 @@ class Post extends Hydrate
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts")
      * @ORM\JoinColumn(nullable=false)
      * @Serializer\Expose
-     * @Serializer\Groups({"view_users"})
+     * @Serializer\Groups({"view_users", "create_posts"})
      */
     private $user;
 

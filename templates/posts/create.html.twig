@@ -4,8 +4,32 @@
 
 {% block body %}
     <div class="container">
-        {{ form_start(form) }}
+        {{ form_start(form, {'attr': {'id':'create'}} ) }}
         {{ form_widget(form) }}
         {{ form_end(form) }}
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function () {
+
+            $('#create').on('submit', function (event) {
+                event.preventDefault();
+                var data = $(this).serializeArray();
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://127.0.0.1:8000/api/posts',
+                    data: data,
+                    dataType: 'json'
+                }).done(function() {
+                    console.log('success');
+                }).fail(function() {
+                    console.log('fail');
+                })
+            })
+
+        })
+    </script>
 {% endblock %}

@@ -23,6 +23,13 @@ class PostController extends FOSRestController
         return $posts;
     }
 
+    /**
+     * @param Request $request
+     * @return Post|\Symfony\Component\Form\FormErrorIterator
+     * @View(
+     *     serializerGroups={"create_posts"}
+     * )
+     */
     public function postPostsAction(Request $request)
     {
         $post = new Post();

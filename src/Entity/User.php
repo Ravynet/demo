@@ -41,6 +41,7 @@ class User implements UserInterface, \Serializable
     /**
      * @ORM\Column(type="string", unique=true)
      * @Serializer\Expose
+     * @Serializer\Groups({"create_posts"})
      */
     private $username;
 
